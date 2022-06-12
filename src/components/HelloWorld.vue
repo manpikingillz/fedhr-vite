@@ -1,6 +1,6 @@
-<script>
+<script setup>
 import gql from 'graphql-tag'
-import { useQuery } from '@vue/apollo-composable'
+import { useQuery, useMutation } from '@vue/apollo-composable'
 import { ref } from 'vue'
 
 const EMPLOYEES_QUERY = gql`
@@ -11,19 +11,29 @@ const EMPLOYEES_QUERY = gql`
     }
   }
 `
-
-export default {
-  name: 'HelloWorld',
-  setup () {
     const { result, loading, error } = useQuery(EMPLOYEES_QUERY);
 
-    return {
-      result,
-      loading,
-      error
-    }
-  }
-}
+    const CREATE_EMPLOYEE = gql`
+      mutation createEmployeeMutation (
+      $firstName: String!,
+      $middleName: String!,
+      $lastName: String!) {
+        createEmployee (firstName: $firstName, middleName: $middleName, lastName: $lastName) {
+          employee {
+            firstName,
+            lastName
+          }
+        }
+      }`;
+
+   const { mutate: createEmployee } = useMutation(CREATE_EMPLOYEE, () => ({
+        variables: {
+          firstName: 'GIlbetttoooo',
+          middleName: 'Gabriellll11111',
+          lastName: 'Twesigommweee'
+        },
+      })
+    );
 </script>
 
 <template>
@@ -35,6 +45,7 @@ export default {
     {{ employee }}
   </p>
   {{ result }}
+  <button @click="createEmployee(); methodName()">Post</button>
 </template>
 
 <style scoped>
