@@ -28,18 +28,18 @@ const EMPLOYEES_QUERY = gql`
         }
       }`;
 
-   const { mutate: createEmployee, onDone, onError } = useMutation(CREATE_EMPLOYEE, () => ({
+   const { mutate: createEmployee, onDone, onError, loading: createEmployeeLoading, error: createEmployeeError } = useMutation(CREATE_EMPLOYEE, () => ({
         variables: {
-          firstName: 'Rosette 6',
-          middleName: 'Rossie 6',
-          lastName: 'Katusiime 6'
+          firstName: 'Rosette 8',
+          middleName: 'Rossie 8',
+          lastName: 'Katusiime 8'
         },
         optimisticResponse: {
           createEmployee: {
             employee: {
-              firstName: 'Rosette 6',
-              middleName: 'Rossie 6',
-              lastName: 'Katusiime 6'
+              firstName: 'Rosette 8',
+              middleName: 'Rossie 8',
+              lastName: 'Katusiime 8'
             }
           }
         },
@@ -49,7 +49,7 @@ const EMPLOYEES_QUERY = gql`
 
           let newCacheData = {
             allEmployees: [
-              ...employeesDataInCache.allEmployees,
+              ...employeesDataInCache?.allEmployees,
               newDataFromResponse
             ],
           }
@@ -80,6 +80,8 @@ const EMPLOYEES_QUERY = gql`
   </p>
   {{ result }}
   <button @click="createEmployee(); methodName()">Post</button>
+  <p v-if="createEmployeeLoading">Employee create loading... {{createEmployeeLoading}}</p>
+  <p v-if="createEmployeeError">Employee create loading error... {{createEmployeeError}}</p>
 </template>
 
 <style scoped>
