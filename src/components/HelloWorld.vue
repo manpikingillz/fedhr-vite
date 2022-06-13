@@ -28,6 +28,10 @@ const EMPLOYEES_QUERY = gql`
         }
       }`;
 
+      //TODO:
+      // Implement delete
+      // Implement Update. Might need the idea of ID! for these 2 to work well.
+
    const { mutate: createEmployee, onDone, onError, loading: createEmployeeLoading, error: createEmployeeError } = useMutation(CREATE_EMPLOYEE, () => ({
         variables: {
           firstName: 'Rosette 8',
@@ -56,9 +60,10 @@ const EMPLOYEES_QUERY = gql`
           console.log('ALL: ', newCacheData)
           cache.writeQuery({query: EMPLOYEES_QUERY, data: newCacheData})
         },
-        refetchQueries: [
-          {query: EMPLOYEES_QUERY}
-        ]
+        //TODO: Might not need this or refetch when I have the cache (update), based on this video https://www.youtube.com/watch?v=ZhdGLMeXnvI
+        // refetchQueries: [
+        //   {query: EMPLOYEES_QUERY}
+        // ]
       })
     );
 
