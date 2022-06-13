@@ -12,7 +12,7 @@ const EMPLOYEES_QUERY = gql`
     }
   }
 `
-    const { result, loading, error, refetch } = useQuery(EMPLOYEES_QUERY);
+    const { result, loading, error, refetch } = useQuery(EMPLOYEES_QUERY, {errorPolicy: 'all', fetchPolicy: 'network-only'});
 
     const CREATE_EMPLOYEE = gql`
       mutation createEmployeeMutation (
@@ -65,7 +65,7 @@ const EMPLOYEES_QUERY = gql`
       })
 
     onError(()=> {
-        console.log('Errrorrr!!')
+        console.log('Errrorrr!!', createEmployeeError)
       })
 </script>
 
@@ -81,7 +81,7 @@ const EMPLOYEES_QUERY = gql`
   {{ result }}
   <button @click="createEmployee(); methodName()">Post</button>
   <p v-if="createEmployeeLoading">Employee create loading... {{createEmployeeLoading}}</p>
-  <p v-if="createEmployeeError">Employee create loading error... {{createEmployeeError}}</p>
+  <p v-if="createEmployeeError">Employee create loading error... {{createEmployeeError.message}}</p>
 </template>
 
 <style scoped>
