@@ -55,13 +55,16 @@ const EMPLOYEES_QUERY = gql`
           }
           console.log('ALL: ', newCacheData)
           cache.writeQuery({query: EMPLOYEES_QUERY, data: newCacheData})
-        }
+        },
+        refetchQueries: [
+          {query: EMPLOYEES_QUERY}
+        ]
       })
     );
 
     onDone(()=> {
-      refetch();
-        console.log('Finishedddd!!')
+      // refetch();
+      //   console.log('Finishedddd!!')
       })
 
     onError(()=> {
